@@ -26,7 +26,7 @@ async def test_create_product_invalid_price(async_client: AsyncClient):
             "price": "-10.0"
         }
     )
-    assert response.status_code == 422 # Pydantic Validation Error
+    assert response.status_code == 422
 
 @pytest.mark.asyncio
 async def test_create_product_invalid_title(async_client: AsyncClient):
@@ -37,11 +37,10 @@ async def test_create_product_invalid_title(async_client: AsyncClient):
             "price": "10.0"
         }
     )
-    assert response.status_code == 422 # Pydantic Validation Error
+    assert response.status_code == 422
 
 @pytest.mark.asyncio
 async def test_list_products(async_client: AsyncClient):
-    # Setup - create a product
     await async_client.post(
         "/create",
         json={
@@ -59,7 +58,6 @@ async def test_list_products(async_client: AsyncClient):
 
 @pytest.mark.asyncio
 async def test_detail_product(async_client: AsyncClient):
-    # Setup - create product
     create_response = await async_client.post(
         "/create",
         json={
@@ -69,7 +67,6 @@ async def test_detail_product(async_client: AsyncClient):
     )
     product_id = create_response.json()["data"]["id"]
     
-    # Get Detail
     response = await async_client.get(f"/detail/{product_id}")
     assert response.status_code == 200
     data = response.json()

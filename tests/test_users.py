@@ -19,7 +19,6 @@ async def test_signup(async_client: AsyncClient):
 
 @pytest.mark.asyncio
 async def test_signup_duplicate(async_client: AsyncClient):
-    # Setup - create user first
     await async_client.post(
         "/users/signup",
         json={
@@ -29,7 +28,6 @@ async def test_signup_duplicate(async_client: AsyncClient):
         }
     )
     
-    # Try creating again
     response = await async_client.post(
         "/users/signup",
         json={
@@ -43,7 +41,6 @@ async def test_signup_duplicate(async_client: AsyncClient):
 
 @pytest.mark.asyncio
 async def test_login_success(async_client: AsyncClient):
-    # Setup - create user
     await async_client.post(
         "/users/signup",
         json={
@@ -53,7 +50,6 @@ async def test_login_success(async_client: AsyncClient):
         }
     )
     
-    # Login
     response = await async_client.post(
         "/users/login",
         data={
@@ -79,7 +75,6 @@ async def test_login_fail(async_client: AsyncClient):
 
 @pytest.mark.asyncio
 async def test_read_profile(async_client: AsyncClient):
-    # Setup - create user and login
     await async_client.post(
         "/users/signup",
         json={
@@ -97,7 +92,6 @@ async def test_read_profile(async_client: AsyncClient):
     )
     token = login_response.json()["access_token"]
     
-    # Read Profile
     response = await async_client.get(
         "/users/profile",
         headers={"Authorization": f"Bearer {token}"}
