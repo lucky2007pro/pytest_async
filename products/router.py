@@ -1,8 +1,9 @@
-from products.schema import ProductCreateSchema, ProductOutSchema, ProductUpdateSchema
-from products.crud import create_product, list_product, delete_product, update_product, detail_product
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
+
 from db import get_db
+from products.crud import create_product, list_product, delete_product, update_product, detail_product
+from products.schema import ProductCreateSchema, ProductUpdateSchema
 
 router = APIRouter()
 
